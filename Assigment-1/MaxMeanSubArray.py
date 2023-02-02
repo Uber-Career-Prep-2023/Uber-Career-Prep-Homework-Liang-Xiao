@@ -1,7 +1,7 @@
 # strategy: using fixed-size sliding window
 # questions to make sure: k >= 1 and len(arr) >= k
 # time complexity: O(n), n refer to the length of the input array
-# space complexity O(1), no extra space added
+# space complexity O(1), only constant extra space added
 # time to complete, roughly 30 minutes
 
 def MaxMeanSubArray(arr, k):
