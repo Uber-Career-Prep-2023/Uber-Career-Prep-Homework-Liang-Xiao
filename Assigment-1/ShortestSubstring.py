@@ -1,10 +1,11 @@
 # strategy: using a dictionary to store the occurrence of elements in input strings
+#           and use sliding window strategy to find the shortest substring
 # conditions to make sure :
-# the target string must be a substring of the input string
-# if the target string is empty string return 0
-# time complexity: O(n), n refer to the max length of the input strings
-# space complexity O(n), two lists added to store elements of the strings
-# time to complete, roughly 15 minutes.
+#            the target string must be a substring of the input string
+#            if the target string is empty string return 0
+# time complexity: O(n1 + n2), n1 and n2 refer to the length of the input strings
+# space complexity O(n2), an extra dictionary is added
+# time to complete, roughly 35 minutes, longer to think out how to move the pointers
 def ShortestSubstring(input_str, target_str):
     if len(target_str) == 0:
         return 0
