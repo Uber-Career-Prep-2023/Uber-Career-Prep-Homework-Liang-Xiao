@@ -13,7 +13,7 @@ def DedupArray(arr):
     # keep it in the left pointer, and move left pointer.
     # this method makes sure that all the elements before left pointer is unique.
     while right < n:
-        if arr[left - 1] != arr[right]: # check whether element at j is not a duplicate element
+        if arr[left - 1] != arr[right]: # check whether element at right pointer is not a duplicate element
             arr[left] = arr[right]
             left += 1
         right += 1
