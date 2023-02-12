@@ -36,9 +36,7 @@ def ShortestSubstring(input_str, target_str):
             if head in dict_count and dict_count[head] == 0:
                 dict_count[head] = 1
                 count = 1
-                pointer_head += 1
-            else:
-                pointer_head += 1
+            pointer_head += 1
     return shortest
 
 
@@ -48,4 +46,4 @@ if __name__ == "__main__":
     str1, str2 = "zxycbaabcdwxyzzxwdcbxyzabccbazyx", "zzyzx"
     print(ShortestSubstring(str1, str2))
     str1, str2 = "dog", "god"
-    print(ShortestSubstring(str1, ""))
+    print(ShortestSubstring(str1, str2))
