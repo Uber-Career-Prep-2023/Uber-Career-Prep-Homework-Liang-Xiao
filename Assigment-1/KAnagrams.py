@@ -1,9 +1,20 @@
-# strategy: using a dictionary to store the occurrence of element in str1, then traverse str2
-#           and count the difference
-# base cases : seen in below
-# time complexity: O(m + n + m), m refer to the length of the str1 and n refer to the length of the str2
-# space complexity O(n), a dictionary is added
-# time to complete, roughly 20 minutes
+"""
+# strategy: using a dictionary to store the occurrence of element in str1, then traverse str2 and count the difference
+1. using a dictionary to store the occurrence of element in str1
+2. traverse str2 and match the elements in the dictionary and the update the value
+3. traverse key value pair of the dictionary and add up all the positive value as the total difference as the
+positive value means count of elements that need to be matched
+
+
+# base cases : input strings are None or their length not equal
+
+# time complexity: O(n), n refer to the length of the str1 and str2, len(str1) = len(str2)
+
+# space complexity O(n), a dictionary is added as the length of the str1
+
+# time to complete, roughly 20 minutes"""
+
+
 def KAnagrams(str1, str2, k):
     # three base cases as below
     if str1 is None and str2 is None:
@@ -20,13 +31,14 @@ def KAnagrams(str1, str2, k):
             dict_1[ele] = 1
         else:
             dict_1[ele] += 1
-    # traverse str2 and store the difference of each element
+    # traverse str2 and update the value of each element
     for ele in str2:
         if ele in dict_1:
             dict_1[ele] -= 1
     # traverse dict_1 to count the total difference
-    for key in dict_1:
-        difference += abs(dict_1[key])
+    for key, val in dict_1.items():
+        if val > 0:  # add up the positive value
+            difference += val
     return difference <= k
 
 

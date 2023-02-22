@@ -1,24 +1,36 @@
-# strategy: using two extra array to decode the elements of the strings
-# conditions to make sure : input is none or empty string, just return 0
-#                           the index of # is valid
-# time complexity: O(n1 + n2), n1 and n2 refer to the length of the input strings
-# space complexity O(n1 + n2), two lists added to store elements of the strings
-# time to complete, roughly 15 minutes.
-def BackspaceStringCompare(str1, str2):
-    if str1 is None and str2 is None:
+"""
+#strategy: using two extra lists to store the elements of the strings
+ 1. create two lists to store the elements of the strings
+ 2. loop the inputs string and fill in the lists, when coming across #, delete the last element in the list
+ 3. check whether the elements in two lists are same
+
+# conditions to make sure : whether input are none or empty strings
+                           the index and number of # is valid to makes sure there are enough chars to be deleted
+
+# time complexity: O(m + n), m and n refer to the length of the input strings
+
+# space complexity O(m + n), two lists added to store elements of the strings
+
+# time to complete, roughly 15 minutes."""
+
+
+def BackspaceStringCompare(input_str1, input_str2):
+    if input_str1 is None and input_str2 is None:
         return True
-    if str1 is None or str2 is None:
+    if input_str1 is None or input_str2 is None:
         return False
+    # two extra array to store the elements of the strings
     list1 = []
     list2 = []
-    for ele in str1:
+    # loop the inputs string and fill in the lists
+    for ele in input_str1:
         if ele == "#":
-            del list1[-1]
+            del list1[-1]  # when coming across #, delete the last element in the list
         else:
             list1.append(ele)
-    for ele in str2:
+    for ele in input_str2:
         if ele == "#":
-            del list2[-1]
+            del list2[-1]  # when coming across #, delete the last element in the list
         else:
             list2.append(ele)
     return list1 == list2

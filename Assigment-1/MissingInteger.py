@@ -1,8 +1,18 @@
-# strategy: traverse the array, compare the element with the position
+"""
+# strategy: traverse the array, compare the element with its index.
+the elements are already sorted and has n - 1 elements containing all but one of the integers in the range 1-n
+if the element is not missing, there should be n element and arr[i] = i + 1
+loop through the array and check if arr[i] = i + 1, if not, i + 1 must be the missing element
+
 # conditions to make sure : n >= 1
+
 # time complexity: O(n), n refer to the length of the input array
+
 # space complexity O(1), no extra space is added
-# time to complete, roughly 10 minutes
+
+# time to complete, roughly 10 minutes"""
+
+
 def MissingInteger(arr, n):
     res = n
     for i in range(n - 1):
