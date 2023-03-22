@@ -2,12 +2,14 @@ class Node:
     def __init__(self, val):
         self.val = val
         self.next = None
+        self.pre = None
 
 
 # creates new Node with data val at front; returns new head
 def insertAtFront(head, val):
     head1 = Node(val)
     head1.next = head
+    head.pre = head1
     return head1
 
 
@@ -16,7 +18,9 @@ def insertAtBack(head, val):
     cur = head
     while cur.next is not None:
         cur = cur.next
-    cur.next = Node(val)
+    end = Node(val)
+    cur.next = end
+    end.pre = cur
 
 
 # creates new Node with data val after Node loc
@@ -25,12 +29,15 @@ def insertAfter(head, val, loc):
     new_node = Node(val)
     loc.next = new_node
     new_node.next = next_loc
+    new_node.pre = loc
+    next_loc.pre = new_node
 
 
 # removes first Node; returns new head
 def deleteFront(head):
     head1 = head.next
     head.next = None
+    head1.pre = None
     return head1
 
 
@@ -41,6 +48,8 @@ def deleteBack(head):
     cur = head
     while cur.next.next is not None:
         cur = cur.next
+    end = cur.next
+    end.pre = None
     cur.next = None
 
 
@@ -48,10 +57,10 @@ def deleteBack(head):
 def deleteNode(head, loc):
     if loc is head:
         return deleteFront(head)
-    cur = head
-    while cur.next is not loc:
-        cur = cur.next
-    cur.next = loc.next
+    prev = loc.pre
+    nxt = loc.next
+    prev.next = nxt
+    nxt.pre = prev
     return head
 
 
@@ -72,6 +81,7 @@ def reverseIterative(head):
     while cur is not None:
         nxt = cur.next
         cur.next = pre
+        cur.pre = nxt
         pre = cur
         cur = nxt
     return pre
@@ -82,18 +92,26 @@ def reverseRecursive(head):
     if head.next is None:
         return head
     head1 = reverseRecursive(head.next)
-    head.next.next = head
+    nxt = head.next
     head.next = None
+    nxt.pre = None
+    nxt.next = head
+    head.pre = nxt
     return head1
 
 
 def printList(head):
-    print(head.val, end="")
-    head = head.next
-    while head is not None:
-        print("-->" + str(head.val), end="")
-        head = head.next
-    print()
+    cur = head
+    while cur.next is not None:
+        print(str(cur.val) + "--->", end="")
+        cur = cur.next
+    print(str(cur.val))
+    res = str(cur.val)
+    cur = cur.pre
+    while cur is not None:
+        res = str(cur.val) + "<---" + res
+        cur = cur.pre
+    print(res)
 
 
 if __name__ == "__main__":
@@ -104,10 +122,15 @@ if __name__ == "__main__":
     node5 = Node(5)
     node6 = Node(6)
     node1.next = node2
+    node2.pre = node1
     node2.next = node3
+    node3.pre = node2
     node3.next = node4
+    node4.pre = node3
     node4.next = node5
+    node5.pre = node4
     node5.next = node6
+    node6.pre = node5
     print("-----original list-----")
     printList(node1)
     print("-----inset 7 at front-----")
