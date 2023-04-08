@@ -1,36 +1,28 @@
+from collections import deque
+
+
 class Queue:
     def __init__(self):
-        self.list1 = []
-        self.list2 = []
+        self.dq = deque()
 
     # returns the first item in the queue
     def peek(self):
-        if len(self.list2) > 0:
-            return self.list2[-1]
-        while len(self.list1) > 0:
-            self.list2.append(self.list1.pop())
-        return self.list2[-1]
+        return self.dq[0]
 
     # adds x to the back of the queue
     def enqueue(self, x):
-        self.list1.append(x)
+        self.dq.append(x)
 
     # removes and returns the first item in the queue
     def dequeue(self):
-        res = self.peek()
-        self.list2.pop()
-        return res
+        return self.dq.popleft()
 
     # returns a boolean indicating whether the queue is empty
     def isEmpty(self):
-        return len(self.list1) + len(self.list2) == 0
+        return len(self.dq) == 0
 
     def print(self):
-        for i in range(len(self.list2) - 1, -1, -1):
-            print(f"{self.list2[i]} ", end="")
-        for i in range(len(self.list1)):
-            print(f"{self.list1[i]} ", end="")
-        print()
+        print(self.dq)
 
 
 if __name__ == "__main__":
