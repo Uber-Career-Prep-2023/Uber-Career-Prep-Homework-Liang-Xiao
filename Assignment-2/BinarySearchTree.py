@@ -80,6 +80,7 @@ class BinarySearchTree:
 
         self.root = deleteNode(self.root, val)
 
+    # add a traverse to show the values of nodes on the tree for testing
     def traverse(self):
         def helper(node, res):
             if node is None:
