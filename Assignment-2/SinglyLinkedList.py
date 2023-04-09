@@ -4,136 +4,136 @@ class Node:
         self.next = None
 
 
-# creates new Node with data val at front; returns new head
-def insertAtFront(head, val):
-    head1 = Node(val)
-    head1.next = head
-    return head1
+class SinglyLinkedList:
+    def __init__(self, node):
+        self.head = node
 
+    # creates new Node with data val at front; returns new head
+    def insertAtFront(self, val):
+        head1 = Node(val)
+        head1.next = self.head
+        self.head = head1
+        return head1
 
-# creates new Node with data val at end
-def insertAtBack(head, val):
-    cur = head
-    while cur.next is not None:
-        cur = cur.next
-    cur.next = Node(val)
+    # creates new Node with data val at end
+    def insertAtBack(self, val):
+        cur = self.head
+        while cur.next is not None:
+            cur = cur.next
+        cur.next = Node(val)
 
-
-# creates new Node with data val after Node loc
-def insertAfter(head, val, loc):
-    next_loc = loc.next
-    new_node = Node(val)
-    loc.next = new_node
-    new_node.next = next_loc
-
-
-# removes first Node; returns new head
-def deleteFront(head):
-    head1 = head.next
-    head.next = None
-    return head1
-
-
-# removes last Node
-def deleteBack(head):
-    if head.next is None:
-        return None
-    cur = head
-    while cur.next.next is not None:
-        cur = cur.next
-    cur.next = None
-
-
-# deletes Node loc; returns head
-def deleteNode(head, loc):
-    if loc is head:
-        return deleteFront(head)
-    cur = head
-    while cur.next is not loc:
-        cur = cur.next
-    cur.next = loc.next
-    return head
-
-
-#  returns length of the list
-def length(head):
-    cur = head
-    count = 0
-    while cur is not None:
-        count += 1
-        cur = cur.next
-    return count
-
-
-#  reverses the linked list iteratively
-def reverseIterative(head):
-    pre = None
-    cur = head
-    while cur is not None:
+    # creates new Node with data val after location
+    def insertAfter(self, val, loc):
+        cur_loc = 0
+        cur = self.head
+        while cur_loc < loc:
+            cur = cur.next
+            cur_loc += 1
         nxt = cur.next
-        cur.next = pre
-        pre = cur
-        cur = nxt
-    return pre
+        new_node = Node(val)
+        cur.next = new_node
+        new_node.next = nxt
 
+    # removes first Node; returns new head
+    def deleteFront(self):
+        head1 = self.head.next
+        self.head.next = None
+        self.head = head1
+        return head1
 
-# reverses the linked list recursively
-def reverseRecursive(head):
-    if head.next is None:
-        return head
-    head1 = reverseRecursive(head.next)
-    head.next.next = head
-    head.next = None
-    return head1
+    # removes last Node
+    def deleteBack(self):
+        if self.head.next is None:
+            return None
+        cur = self.head
+        while cur.next.next is not None:
+            cur = cur.next
+        cur.next = None
 
+    # deletes node at location; returns head
+    def deleteNode(self, loc):
+        if loc == 0:
+            return self.deleteFront()
 
-def printList(head):
-    print(head.val, end="")
-    head = head.next
-    while head is not None:
-        print("-->" + str(head.val), end="")
-        head = head.next
-    print()
+        cur_loc = 0
+        pre = None
+        cur = self.head
+        while cur_loc < loc:
+            pre = cur
+            cur = cur.next
+            cur_loc += 1
+        nxt = cur.next
+        pre.next = nxt
+
+    #  returns length of the list
+    def length(self):
+        cur = self.head
+        count = 0
+        while cur is not None:
+            count += 1
+            cur = cur.next
+        return count
+
+    #  reverses the linked list iteratively
+    def reverseIterative(self):
+        pre = None
+        cur = self.head
+        while cur is not None:
+            nxt = cur.next
+            cur.next = pre
+            pre = cur
+            cur = nxt
+        self.head = pre
+        return pre
+
+    # reverses the linked list recursively
+    def reverseRecursive(self):
+        def reverse(head):
+            if head.next is None:
+                return head
+            head1 = reverse(head.next)
+            head.next.next = head
+            head.next = None
+            return head1
+        self.head = reverse(self.head)
+
+    def printList(self):
+        print(self.head.val, end="")
+        cur = self.head.next
+        while cur is not None:
+            print("-->" + str(cur.val), end="")
+            cur = cur.next
+        print()
 
 
 if __name__ == "__main__":
     node1 = Node(1)
-    node2 = Node(2)
-    node3 = Node(3)
-    node4 = Node(4)
-    node5 = Node(5)
-    node6 = Node(6)
-    node1.next = node2
-    node2.next = node3
-    node3.next = node4
-    node4.next = node5
-    node5.next = node6
+    slist1 = SinglyLinkedList(node1)
+    num = [3, 5, 6, 8, 9]
+    for ele in num:
+        slist1.insertAtBack(ele)
+
     print("-----original list-----")
-    printList(node1)
+    slist1.printList()
     print("-----inset 7 at front-----")
-    new_head = insertAtFront(node1, 7)
-    printList(new_head)
-    print("-----inset 8 after node2-----")
-    insertAfter(new_head, 8, node2)
-    printList(new_head)
-    print("-----inset 9 at back-----")
-    insertAtBack(new_head, 9)
-    printList(new_head)
+    slist1.insertAtFront(7)
+    slist1.printList()
+    print("-----inset 8 after loc 2-----")
+    slist1.insertAfter(8, 2)
+    slist1.printList()
     print("-----delete at front-----")
-    new_head = deleteFront(new_head)
-    printList(new_head)
+    slist1.deleteFront()
+    slist1.printList()
     print("-----delete at back-----")
-    deleteBack(new_head)
-    printList(new_head)
-    print("-----delete node3 -----")
-    new_head = deleteNode(new_head, node3)
-    printList(new_head)
-    print("length of list is " + str(length(new_head)))
+    slist1.deleteBack()
+    slist1.printList()
+    print("-----delete loc 3 -----")
+    slist1.deleteNode(3)
+    slist1.printList()
+    print("length of list is " + str(slist1.length()))
     print("-----reverse list iteratively-----")
-    new_head = reverseIterative(new_head)
-    printList(new_head)
+    slist1.reverseIterative()
+    slist1.printList()
     print("-----reverse list recursively-----")
-    new_head = reverseIterative(new_head)
-    printList(new_head)
-
-
+    slist1.reverseRecursive()
+    slist1.printList()
