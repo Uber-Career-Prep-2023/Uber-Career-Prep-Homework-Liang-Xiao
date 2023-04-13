@@ -6,6 +6,9 @@ class TreeNode:
 
 
 # Given a binary tree, create a deep copy. Return the root of the new tree.
+# time complexity O(n), n refer to the number of node on the tree
+# space complexity O(n), n refer to the number of node on the tree
+# time spent on the question: about 10 min
 def CopyTree(root):
     if root is None:
         return None

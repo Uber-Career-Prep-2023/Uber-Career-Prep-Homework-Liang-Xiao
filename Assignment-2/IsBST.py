@@ -6,6 +6,9 @@ class TreeNode:
 
 
 # Given a binary tree, determine if it is a binary search tree.
+# time complexity O(n), n refer to the number of node on the tree
+# space complexity O(log(n)), n refer to the number of node on the tree
+# time spent on the question: about 20 min
 def isBst(root):
     def helper(tree_root, min_val, max_val):
         if tree_root is None:

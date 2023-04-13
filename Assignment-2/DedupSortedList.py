@@ -6,6 +6,9 @@ class Node:
 
 # Given a sorted singly linked list, remove any duplicates so that no value appears more than once.
 
+# time complexity O(n), n refer to the number of node on the list
+# space complexity O(1), extra space needed is constant
+# time spent on the question: about 15 min
 def DedupSortedList(head):
     if head.next is None:
         return
