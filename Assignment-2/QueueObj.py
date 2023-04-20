@@ -1,7 +1,7 @@
 from collections import deque
 
 
-class Queue:
+class QueueObj:
     def __init__(self):
         self.dq = deque()
 
@@ -27,7 +27,7 @@ class Queue:
 
 if __name__ == "__main__":
     # create a queue
-    queue = Queue()
+    queue = QueueObj()
     # add some element into queue
     queue.enqueue(1)
     queue.enqueue(4)
