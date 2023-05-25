@@ -2,7 +2,7 @@
 # Return the number of islands (contiguous 1s surrounded by 0s or the edge of the matrix).
 # time complexity O(m * n), m, n refer to the number of row and col of the matrix
 # space complexity O(m * n), m, n refer to the number of row and col of the matrix
-# time spent on the question: about 20 min
+# time spent on the question: about 40 min
 from collections import deque
 
 

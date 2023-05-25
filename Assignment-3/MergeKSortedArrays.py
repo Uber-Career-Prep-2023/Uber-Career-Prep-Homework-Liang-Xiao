@@ -3,7 +3,7 @@ Given an array of k sorted arrays, merge the k arrays into a single sorted array
 
 time complexity O(n * log(k)), n refer to size of the merged array
 space complexity O(k), an extra heap of size k is needed
-time spent on the question: about 15 min
+time spent on the question: about 25 min
 """
 import heapq
 

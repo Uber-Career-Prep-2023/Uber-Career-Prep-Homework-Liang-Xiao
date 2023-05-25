@@ -8,7 +8,7 @@ and a state in which none of the towns are connected by roads has 0 road network
 
 time complexity O(n + m), n refer to towns and m refer to roads
 space complexity O(n + m), n refer to towns and m refer to roads
-time spent on the question: about 15 min
+time spent on the question: about 20 min
 """
 from collections import defaultdict
 
