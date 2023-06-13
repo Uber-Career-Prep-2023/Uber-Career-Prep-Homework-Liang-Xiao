@@ -6,6 +6,21 @@
 from collections import deque
 
 
+def bfs(source, matrix, visited):
+    direction = [(1, 0), (-1, 0), (0, 1), (0, -1)]
+    queue = deque()
+    queue.append(source)
+    row = len(matrix)
+    col = len(matrix[0])
+    while len(queue) > 0:
+        current = queue.popleft()
+        visited.add(current)
+        for i, j in direction:
+            x, y = current[0] + i, current[1] + j
+            if 0 <= x < row and 0 <= y < col and matrix[x][y] == 1 and (x, y) not in visited:
+                queue.append((x, y))
+
+
 def NumberOfIslands(matrix):
     visited = set()  # use a set to keep track of visited position
     num_island = 0
@@ -15,18 +30,7 @@ def NumberOfIslands(matrix):
         for j in range(col):
             if matrix[i][j] == 1 and (i, j) not in visited:
                 # using bfs to find an island
-                index_queue = deque()
-                index_queue.append((i, j))
-                while len(index_queue) > 0:
-                    size = len(index_queue)
-                    for num in range(size):
-                        x, y = index_queue.popleft()
-                        visited.add((x, y))
-                        direction = [(-1, 0), (0, -1), (1, 0), (0, 1)]  # 4 possible directions
-                        for l, r in direction:
-                            if 0 <= x + l < row and 0 <= y + r < col:
-                                if matrix[x + l][y + r] == 1 and (x + l, y + r) not in visited:
-                                    index_queue.append((x + l, y + r))
+                bfs((i, j), matrix, visited)
                 num_island += 1
     return num_island
 

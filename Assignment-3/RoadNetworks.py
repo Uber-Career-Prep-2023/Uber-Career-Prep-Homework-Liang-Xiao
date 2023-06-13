@@ -13,6 +13,7 @@ time spent on the question: about 20 min
 from collections import defaultdict
 
 
+# use dfs to traverse all roads of a town
 def dfs(graph, start, visited):
     visited.add(start)
     for neighbor in graph[start]:
@@ -20,13 +21,22 @@ def dfs(graph, start, visited):
             dfs(graph, neighbor, visited)
 
 
+# build adjacency list of the graph
+def build_graph(edges):
+    graph = defaultdict(list)
+    for town1, town2 in edges:
+        graph[town1].append(town2)
+        graph[town2].append(town1)
+    return graph
+
+
 def RoadNetworks(towns, roads):
-    adjacency_list = defaultdict(list)
-    for town1, town2 in roads:
-        adjacency_list[town1].append(town2)
-        adjacency_list[town2].append(town1)
+    if len(roads) == 0:
+        return 0
+    adjacency_list = build_graph(roads)
     num_of_networks = 0
     visited = set()
+    # traverse all towns to find number of networks
     for town in adjacency_list:
         if town not in visited:
             dfs(adjacency_list, town, visited)

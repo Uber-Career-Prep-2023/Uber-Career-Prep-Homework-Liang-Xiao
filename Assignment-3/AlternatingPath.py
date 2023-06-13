@@ -3,58 +3,45 @@ Given an origin and a destination in a directed graph in which edges can be blue
 of the shortest path from the origin to the destination in which the edges traversed alternate in color.
 Return -1 if no such path exists.
 
-time complexity O(n + m), n refer to nodes and m refer to edges
-space complexity O(n + m), n refer to nodes and m refer to edges
+time complexity O(n), n refer to edges
+space complexity O(n), n refer to nodes
 time spent on the question: about 30 min
 """
 from collections import defaultdict, deque
 
 
 # using bfs to find the shortest path
-def bsf(origin, destination, graph, flag):
-    shortest_path = 0
-    queue = deque()
-    queue.append(origin)
-    stop = False
-    while len(queue) > 0 and not stop:
-        size = len(queue)
-        if flag:  # alternating color using flag
-            for i in range(size):
-                node = queue.popleft()
-                if node == destination:  # when reaching the target, change stop to terminate
-                    stop = True
-                    break
-                for neighbour, color in graph[node]:
-                    if color == "red":
-                        queue.append(neighbour)
-            if not stop:
-                shortest_path += 1
-            flag = not flag
-        else:
-            for i in range(size):
-                node = queue.popleft()
-                if node == destination:
-                    stop = True
-                    break
-                for neighbour, color in graph[node]:
-                    if color == "blue":
-                        queue.append(neighbour)
-            if not stop:
-                shortest_path += 1
-            flag = not flag
-    if stop:
-        return shortest_path
+def bsf(origin, destination, graph, color):
+    queue = [(origin, color)]
+    visited = set()
+    level = 0
+    while queue:
+        next_q = []
+        for item in queue:
+            visited.add(item)
+            node, color = item
+            if node == destination:
+                return level
+            for neighbor in graph[node]:
+                if neighbor not in visited and neighbor[1] != color:
+                    next_q.append(neighbor)
+        queue = next_q
+        level += 1
     return -1
 
 
 def AlternatingPath(origin, destination, edges):
-    # construct adjacency list of the graph
+    # construct adjacency list of the graph and color set
+    color_set = set()
     adjacency_list = defaultdict(list)
     for point_x, point_y, color in edges:
         adjacency_list[point_x].append((point_y, color))
+        color_set.add(color)
+
     # compare result of 2 options
-    num_of_red = bsf(origin, destination, adjacency_list, True)  # begin with red color
-    num_of_blue = bsf(origin, destination, adjacency_list, False)  # begin with blue color
+    color1, color2 = color_set
+    num_of_red = bsf(origin, destination, adjacency_list, color1)  # begin with red color
+    num_of_blue = bsf(origin, destination, adjacency_list, color2)  # begin with blue color
     if num_of_red == -1 and num_of_blue == -1:
         return -1
     if num_of_red == -1 or num_of_blue == -1:
