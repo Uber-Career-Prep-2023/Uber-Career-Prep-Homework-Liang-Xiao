@@ -6,30 +6,40 @@ time complexity O(n + m), n refer to courses and m refer to edges in course map
 space complexity O(n + m), n refer to courses and m refer to edges in course map
 time spent on the question: about 20 min
 """
-from collections import defaultdict
+
+
+# create adjacency_list from map of courses
+def build_graph(courses, course_map):
+    graph = {}
+    for node in courses:
+        graph[node] = []
+    for node in course_map:
+        for pre_course in course_map[node]:
+            graph[pre_course].append(node)
+    return graph
 
 
 def PrerequisiteCourses(courses, course_map):
-    # create adjacency_list from map of courses
-    adjacency_list = defaultdict(list)
-    for node in course_map:
-        for neighbour in course_map[node]:
-            adjacency_list[neighbour].append(node)
+    graph = build_graph(courses, course_map)
+
     # create a list to store the number of prerequisites of courses.
     in_degree_dict = {node: 0 for node in courses}
-    for node in course_map:
-        in_degree_dict[node] += len(course_map[node])
+    for node in graph:
+        for neighbour in graph[node]:
+            in_degree_dict[neighbour] += 1
+
     # find the first course with has no prerequisites.
     zero_degree = []
     for node in in_degree_dict:
         if in_degree_dict[node] == 0:
             zero_degree.append(node)
+
     # store the courses in topological_order
     topological_order = []
     while len(zero_degree) > 0:
         node = zero_degree.pop()
         topological_order.append(node)
-        for neighbor in adjacency_list[node]:
+        for neighbor in graph[node]:
             in_degree_dict[neighbor] -= 1
             if in_degree_dict[neighbor] == 0:
                 zero_degree.append(neighbor)
