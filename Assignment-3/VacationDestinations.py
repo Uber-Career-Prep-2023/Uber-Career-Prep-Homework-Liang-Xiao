@@ -38,27 +38,26 @@ def VacationDestinations(destinations, origin, k):
     arrived_destination = []
     while priority_queue:
         city = heapq.heappop(priority_queue)[-1]
-        visited_city.add(city)
-        cur_distance = distances_dict[city]
-        if 0 < cur_distance <= k:
-            arrived_destination.append(city)
-        for neighbour, distance in adjacency_list[city]:
-            nei_distance = distances_dict[neighbour]
-            update = cur_distance + distance
-            if city != origin:
-                update += 1  # a stopover in a city adds an hour of travel time.
-            if nei_distance > update:
-                nei_distance = update
-                distances_dict[neighbour] = nei_distance
-            if neighbour not in visited_city:
-                heapq.heappush(priority_queue, [nei_distance, neighbour])
+        if city not in visited_city:
+            visited_city.add(city)
+            cur_distance = distances_dict[city]
+            if 0 < cur_distance <= k:
+                arrived_destination.append(city)
+            for neighbour, distance in adjacency_list[city]:
+                nei_distance = distances_dict[neighbour]
+                update = cur_distance + distance
+                if city != origin:
+                    update += 1  # a stopover in a city adds an hour of travel time.
+                if nei_distance > update:
+                    nei_distance = update
+                    distances_dict[neighbour] = nei_distance
+                if neighbour not in visited_city:
+                    heapq.heappush(priority_queue, [nei_distance, neighbour])
     return arrived_destination
 
 
 if __name__ == "__main__":
-    input_graph = [("Boston", "New York", 4), ("New York", "Philadelphia", 2), ("Boston", "Newport", 1.5),
-                   ("Washington, D.C.", "Harper's Ferry", 1), ("Boston", "Portland", 2.5),
-                   ("Philadelphia", "Washington, D.C.", 2.5)]
+    input_graph = [("Boston", "New York", 1), ("New York", "Philadelphia", 4), ("Boston", "Philadelphia", 1.5)]
     origin_city = "New York"
     input_k = 5
     print(VacationDestinations(input_graph, origin_city, input_k))
