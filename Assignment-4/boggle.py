@@ -38,7 +38,9 @@ class trie:
                 node = node.children[char]
             else:
                 return False
-        return True
+        if node.valid_word:
+            return True
+        return False
 
 
 def boggle(board, dictionary):
@@ -73,7 +75,7 @@ def boggle(board, dictionary):
         words.insert(word)
     m = len(board)
     n = len(board[0])
-    visited = [[False for i in range(n)] for j in range(m)]
+    visited = [[False for _ in range(n)] for _ in range(m)]
 
     # Initialize current string
     start = []
@@ -83,9 +85,10 @@ def boggle(board, dictionary):
     for i in range(m):
         for j in range(n):
             findWords(i, j, start, m, n)
+    return res
 
 
 if __name__ == "__main__":
-    board = [["G", "I", "Z"], ["U", "E", "K"], ["Q", "S", "E"]]
-    dictionary = ["GEEKS", "FOR", "QUIZ", "GO"]
-    print(boggle(board, dictionary))
+    b = [["G", "I", "Z"], ["U", "E", "K"], ["Q", "S", "E"]]
+    d = ["GEEKS", "FOR", "QUIZ", "GO"]
+    print(boggle(b, d))
